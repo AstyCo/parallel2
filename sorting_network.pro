@@ -1,7 +1,4 @@
-QT += core
-QT -= gui
-
-CONFIG += c++11
+QT =
 
 TARGET = sorting_network
 CONFIG += console
