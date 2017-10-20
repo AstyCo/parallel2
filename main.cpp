@@ -102,7 +102,7 @@ void S(int a, int b, int d, int n, int m, int tact)
     if (n == 0 || m == 0)
         return;
     if (n == 1 && m == 1) {
-        add_comparator(a, b, tact);
+        add_comparator(a, b, tact + 1);
         return;
     }
     int halfN = n - n / 2;
@@ -113,10 +113,10 @@ void S(int a, int b, int d, int n, int m, int tact)
     S(a + d, b + d, 2 * d, n - halfN, m - halfM, tact + 1);
 
     for (i = 1; i < n - 1; i += 2)
-        add_comparator(a + d * i, a + d * (i + 1), tact);
+        add_comparator(a + d * i, a + d * (i + 1), tact + 1);
 
     if (n % 2 == 0) {
-        add_comparator(a + d * (n - 1), b, tact);
+        add_comparator(a + d * (n - 1), b, tact + 1);
         i = 1;
     }
     else {
@@ -124,7 +124,7 @@ void S(int a, int b, int d, int n, int m, int tact)
     }
 
     for (; i < m - 1; i += 2)
-        add_comparator(b + d * i, b + d * (i + 1), tact);
+        add_comparator(b + d * i, b + d * (i + 1), tact + 1);
 }
 
 void B0(int first, int step, int count, int tact)
@@ -132,11 +132,11 @@ void B0(int first, int step, int count, int tact)
     if (count < 2)
         return;
     if (count == 2) {
-        add_comparator(first, first + step, tact);
+        add_comparator(first, first + step, tact + 1);
         return;
     }
     int half = count - count / 2;
-    int countOfMergeSteps = ceil(log2(half));
+    int countOfMergeSteps = ceil(log2(half)) + 1;
     B0(first, step, half, tact + countOfMergeSteps);
     B0(first + step * half, step, count - half, tact + countOfMergeSteps);
     S(first, first + step * half, step, half, count - half, tact);
@@ -214,12 +214,12 @@ void makeMyReportToFile(int n)
 
 int main(int /*argc*/, char */*argv*/[])
 {
-    makeMyReportToFile(6);
-    return 0;
+    makeMyReportToFile(16);
+//    return 0;
 #define EXERCISE 2
     clock_t begin = clock();
 #   if EXERCISE == 2
-    for (int i = 1; i <= 32; i <<= 1) {
+    for (int i = 1; i <= 24; i += 1) {
         if (test(i))
             cout << "success " << toString(i) << endl;
     }
